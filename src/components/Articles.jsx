@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { getArticles } from "../../api";
+import { Link } from "react-router-dom";
 
-const Articles = () => {
-
-    const [articles, setArticles] = useState([])
+const Articles = ({articles, setArticles}) => {
 
     useEffect(() => {
         getArticles()
@@ -16,14 +15,18 @@ const Articles = () => {
 
   return (
     <main>
-        {articles.map((article, i) => {
+        {articles.map((article, article_id) => {
             return (
-            <section key={i}>
-                <img src={article?.img_url} alt="image of item" />
+            <section key={article_id}>
+                <img src={article.article_img_url} alt="image of item" />
               <h2>{article.title}</h2>
-              <p>{article.author}</p>
-              <p>{article.topic}</p>
-              <p>${article.votes}</p>
+              <p>By: {article.author}</p>
+              <p>Topic: {article.topic}</p>
+              <p>Votes: {article.votes}</p>
+              <p>ID {article.article_id}</p>
+            <Link className="Article-btn" to={`/article/${article.article_id}`}>
+            View Article
+            </Link>
             </section>
             )
         })}
