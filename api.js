@@ -9,3 +9,11 @@ export const getArticles = () => {
         console.log(err)
     })
 }
+
+export const getArticlesById = (article_id) => {
+    return api.get(`/articles/${article_id}`, { params: { article_id: article_id } }).then((response) => {
+        return response.data
+    }).catch((err) => {
+        console.log(err)
+    })
+}
