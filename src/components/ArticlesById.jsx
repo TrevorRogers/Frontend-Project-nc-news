@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getArticlesById } from "../../api";
+// import Comments from "./Comments";
+import { Comments } from "./Comments";
 
 const ArticlesById = () => {
 const { article_id } = useParams();
@@ -9,7 +11,6 @@ const [article, setArticle] = useState([]);
 useEffect(() => {
     getArticlesById(article_id)
       .then(({article}) => {
-        console.log(article)
       setArticle(article)
       })
       .catch((err) => {
@@ -17,7 +18,8 @@ useEffect(() => {
   }, [article_id]);
   
   return (
-    <main>
+    <>
+    <main className="article">
               <h1>{article.title}</h1>
            <img src={article.article_img_url} alt="image of item" />
               <h3>By: {article.author}</h3>
@@ -26,6 +28,9 @@ useEffect(() => {
               <p>Topic: {article.topic}</p>
               <p>Votes: {article.votes}</p>
     </main>
+        <Comments />
+                </>
+                
   );
 };
 
