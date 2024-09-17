@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { getArticlesById } from "../../api";
-// import Comments from "./Comments";
+import { getArticlesById, postVote } from "../../api";
 import { Comments } from "./Comments";
+
 
 const ArticlesById = () => {
 const { article_id } = useParams();
 const [article, setArticle] = useState([]);
+const [vote, setVote] = useState(1)
+
+const newVote = {inc_votes: vote}
 
 useEffect(() => {
     getArticlesById(article_id)
@@ -16,6 +19,17 @@ useEffect(() => {
       .catch((err) => {
       });
   }, [article_id]);
+
+  function handleVote(e) {
+    e.preventDefault()
+      setVote(vote + 1)
+      console.log(vote)
+    postVote(newVote, article_id).then(()=>{
+        window.location.reload()
+    }).catch((err)=> {
+        console.log(err)
+    })
+  }
   
   return (
     <>
@@ -27,6 +41,7 @@ useEffect(() => {
               <p>{article.body}</p>
               <p>Topic: {article.topic}</p>
               <p>Votes: {article.votes}</p>
+              <button className="vote-btn" onClick={handleVote}>Add Vote Here</button>
     </main>
         <Comments />
                 </>

@@ -10,7 +10,6 @@ export const Comments = () => {
     useEffect(() => {
         getComments(article_id)
           .then(({comments}) => {
-            console.log(comments)
           setArticleComments(comments)
           })
           .catch((err) => {
@@ -23,7 +22,6 @@ export const Comments = () => {
     <main className="comments">
         <h2>Comments</h2>
        {articleComments.map((comment, comment_id) => {
-        console.log("here")
             return (
             <section key={comment_id} className="comments">
                 <h3>{comment.author}</h3>
