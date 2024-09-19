@@ -1,20 +1,46 @@
 import { useEffect, useState } from "react";
 import { getArticles } from "../../api";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Articles = ({articles, setArticles}) => {
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const topicsQuery = searchParams.get("topic")
+    const [currentTopic, setCurrentTopic] = useState("")
+
+
     useEffect(() => {
-        getArticles()
+        getArticles(topicsQuery)
           .then(({articles}) => {
           setArticles(articles)
+          setCurrentTopic(topicsQuery)
           })
           .catch((err) => {
+            console.log('in catch', err)
           });
-      }, []);
+      }, [topicsQuery]);
+
+      function topicSort(topicChoosen) {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set("topic", topicChoosen);
+        setSearchParams(newParams);
+        setCurrentTopic(topicChoosen);
+      }
 
   return (
     <main className="articles">
+        <select name="" id="" onChange={(event)=> {
+            topicSort(event.target.value)
+        }}>Topics 
+        <option>All</option>
+        {articles.map((article, i) => {
+          return (
+            <option key={i} value={article.topic}>
+                {article.topic}
+            </option>
+          );
+        })}
+        </select>
         {articles.map((article, article_id) => {
             return (
             <section key={article_id} >
