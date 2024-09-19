@@ -32,3 +32,10 @@ export const postComment = (newComment, article_id) => {
         return response.data
     })
 }
+
+export const deleteComment = (comment_id) => {
+    console.log(comment_id)
+    return api.delete(`/comments/${comment_id}`, comment_id).then(()=>{
+        console.log("item removed")
+    })
+}
