@@ -20,8 +20,15 @@ export const getComments = (article_id) => {
     })
 }
 
-export const postVote = (newVote, article_id) => {
+export const updateVote = (newVote, article_id) => {
     return api.patch(`/articles/${article_id}`, newVote).then((response)=>{
+        return response.data
+    })
+}
+
+export const postComment = (newComment, article_id) => {
+    return api.post(`/articles/${article_id}/comments`, newComment).then((response)=>{
+        console.log(response.data)
         return response.data
     })
 }
