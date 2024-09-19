@@ -15,6 +15,17 @@ const Articles = ({articles, setArticles}) => {
 
   return (
     <main className="articles">
+        <select name="" id="" >
+            topics
+            <option>All</option>
+        {articles.map((article, i) => {
+          return (
+            <option key={i} value={article.topic}>
+                {article.topic}
+            </option>
+          );
+        })}
+        </select>
         {articles.map((article, article_id) => {
             return (
             <section key={article_id} >
