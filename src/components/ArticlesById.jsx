@@ -7,18 +7,25 @@ import { Comments } from "./Comments";
 const ArticlesById = () => {
 const { article_id } = useParams();
 const [vote, setVote] = useState(1)
-
+const [isLoading, setIsLoading] = useState(false);
+const [isError, setIsError] = useState(false)
 const [article, setArticle] = useState([])
 const [articleComments, setArticleComments] = useState([])
 
 const newVote = {inc_votes: vote}
 
 useEffect(() => {
+    setIsLoading(true)
     getArticlesById(article_id)
       .then(({article}) => {
       setArticle(article)
+      setIsLoading(false)
+      setIsError(false)
       })
       .catch((err) => {
+        console.log(err)
+        setIsLoading(false)
+        setIsError(true)
       });
   }, [article_id]);
 
@@ -30,6 +37,18 @@ useEffect(() => {
     }).catch((err)=> {
         console.log(err)
     })
+  }
+
+  if (isError) {
+    return (
+        <p>Not Found</p>
+    )
+  }
+
+  if (isLoading) {
+    return (
+     <p>Loading</p>
+    );
   }
   
   return (

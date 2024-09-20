@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const api = axios.create({baseURL: "https://trevors-backend-js-project.onrender.com/api", timeout: 1000 })
 
-export const getArticles = (topicChoosen) => {
-    return api.get("/articles", { params: { topic: topicChoosen } }).then((response) => {
+export const getArticles = (topicChoosen, sortBy) => {
+    return api.get("/articles", { params: { topic: topicChoosen, sort_by: sortBy } }).then((response) => {
         return response.data
     })
 }
